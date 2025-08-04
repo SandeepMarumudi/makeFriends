@@ -3,10 +3,15 @@ const express=require("express")
 const app=express()
 
 
-app.use("/admin",adminAuth)
+app.get("/getUserdata",(req,res)=>{
+    throw new Error("hiiiiiii")
+    res.send("userData sent")
+})
 
-app.get("/admin/login",(req,res)=>{
-res.send("admin is logined")
+app.use("/",(err,req,res,next)=>{
+    if(err){
+        res.status(500).send("somthing went wrong")
+    }
 })
 
 
