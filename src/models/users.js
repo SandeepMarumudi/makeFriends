@@ -1,4 +1,6 @@
+const { type } = require("express/lib/response")
 const mongoose=require("mongoose")
+const validator=require("validator")
 
 const userSchema=new mongoose.Schema({
     firstName:{
@@ -8,10 +10,16 @@ const userSchema=new mongoose.Schema({
         type:String
     },
     email:{
-        type:String
+        type:String,
+       unique:true
     },
     gender:{
-        type:String
+        type:String,
+        required:true,
+    },
+    password:{
+        type:String,
+        required:true
     },
      age:{
         type:Number
