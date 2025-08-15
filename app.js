@@ -1,84 +1,20 @@
 // const { adminAuth } = require("./src/middlewares/admin");
 const cookie=require("cookie-parser")
-const jwt=require("jsonwebtoken")
-const bcrypt = require("bcrypt");
-const {validateUser} = require("./src/utils/validations");
+
+
 const connectDB = require("./src/config/dataBase");
 const express = require("express");
 const User = require("./src/models/users");
-const { userAuth } = require("./src/middlewares/userAuth");
 const app = express();
 app.use(cookie())
 app.use(express.json());
 
-app.post("/signup", async (req, res) => {
-  try {
-    const { firstName, lastName, email, phone, age, password, gender } =
-      req.body;
 
-    //check the user for valide information
-    validateUser(req.body);
+const authRouter= require("./src/routes/auth")
+const profileRouter=require("./src/routes/profile")
 
-    //EnCrypt the password
-    const beCryptPassword = await bcrypt.hash(password, 10);
-  
-
-    // after validations and becryption of password insert data to the database
-
-    const user = new User({
-      firstName,
-      lastName,
-      email,
-      phone,
-      password: beCryptPassword,
-      gender,
-      age,
-    });
-
-    await user.save();
-   
-
-    res.send("data successfully inserted to the database");
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
-});
-
-app.post("/login",async(req,res)=>{
-  const {email,password}=req.body
-  try{
-    const user= await User.findOne({email:email})
-    console.log(user)
-    if(!user){
-      throw new Error("Email id not found please SignUp")
-    }
-
-    const checkPassword= await bcrypt.compare(password,user.password)
-    if(checkPassword){
-      const token= await jwt.sign({_id:user._id},"Sandy2242@")
-      console.log("token is:",token)
-      res.cookie("token",token)
-      res.send("user successfully loggedin")
-    }else{
-      throw new Error("Password wrong please re enter")
-    }
-
-  }catch(err){
-    res.status(400).json({ message: err.message })
-  }
-})
-
-app.get("/profile",userAuth,async(req,res)=>{
- 
-  try{
-    const user=req.user
-      
-    res.send(user)
-
-  }catch(err){
-    res.status(400).send("please login ")
-  }
-})
+app.use("/",authRouter)
+app.use("/",profileRouter)
 
 app.get("/user", async (req, res) => {
   const userName = req.body.firstName;

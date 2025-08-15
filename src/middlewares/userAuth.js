@@ -22,7 +22,6 @@ const userAuth=async(req,res,next)=>{
         const decodedValue= await jwt.verify(token,"Sandy2242@")
         const {_id}=decodedValue
         const user=await User.findById({_id:_id})
-        console.log("user :",user)
         if(!user){
             throw new Error("user not found please login")
         }
