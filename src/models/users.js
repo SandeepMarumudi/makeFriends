@@ -7,33 +7,50 @@ const jwt=require("jsonwebtoken")
 ;
 const userSchema=new mongoose.Schema({
     firstName:{
-        type:String
+        type:String,
+        required:true,
+     
     },
     lastName:{
-        type:String
-    },
+        type:String,
+         required:true,
+        
     email:{
         type:String,
-       unique:true
+        required:true,
+        unique:true
     },
     gender:{
         type:String,
-        required:true,
+         required:true,
+        unique:true
     },
     password:{
         type:String,
-        required:true
+         required:true,
+        unique:true
     },
      age:{
-        type:Number
+        type:Number,
+         required:true,
+        unique:true
     },
     phone:{
-        type:Number
+        type:Number,
+         required:true,
+        unique:true
     },
     skills:{
         type:[String]
+    },
+    resetToken:{
+        type:String
+    },
+    expireToken:{
+        type:Number
     }
-   
+},{
+    timestamps:true
 })
 userSchema.methods.getJWT=async function (){
     try{

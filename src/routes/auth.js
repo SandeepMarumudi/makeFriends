@@ -32,6 +32,7 @@ authRouter.post("/signup", async (req, res) => {
       password: beCryptPassword,
       gender,
       age,
+      skills
     });
 
     await user.save();
