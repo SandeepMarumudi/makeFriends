@@ -12,16 +12,16 @@
 -PATCH/password/update
 
 ## connection requests
--POST/userId/interested
--POST/userId/ignore
--POST/userId/like
--POST/userId/dislike
+-POST/request/send/status/:toUserID
+-POST/request/status/received
+-GET/request/connection  // get all the requests who are interested
+-GET/request/connection  // get all the requests who are accepted
 
 ## feed
--GET/profiles
+-GET/profiles -get profiles of all users on the homescreen for sending requests
 
 ## profiles viewed over
--GET/profiles  //loading noprofiles new 
+-GET/profiles  //loading no profiles new 
 
 ## interstes
 -GET/profiles/photoVerified
