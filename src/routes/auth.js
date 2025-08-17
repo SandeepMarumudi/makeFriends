@@ -12,7 +12,7 @@ const authRouter=express.Router()
 
 authRouter.post("/signup", async (req, res) => {
   try {
-    const { firstName, lastName, email, phone, age, password, gender } =
+    const { firstName, lastName, email, phone, age, password, gender,skills } =
       req.body;
 
     //check the user for valide information
