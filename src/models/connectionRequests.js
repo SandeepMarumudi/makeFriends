@@ -27,7 +27,6 @@ const connectionRequestsSchema=new mongoose.Schema({
 {timestamps:true}
 )
 connectionRequestsSchema.pre("save",function(next){
-    console.log("schema method called")
     const connectionRequest=this
     if(connectionRequest.fromUserId.equals(connectionRequest.toUserId)){
         throw new Error("you cannot send request to yourself")

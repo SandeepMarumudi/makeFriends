@@ -23,17 +23,22 @@ profileRouter.get("/profile",userAuth,async(req,res)=>{
   }
 })
 
-profileRouter.post("/profile/edit",userAuth,async(req,res)=>{
+profileRouter.patch("/profile/edit",userAuth,async(req,res)=>{
   try{
     const isAllowed=validateUserProfileForUpdate(req.body)
 if(!isAllowed){
  throw new Error("invalid edit request")
 }
  const logginedUser=req.user
- console.log("logined user:",logginedUser)
-  Object.keys(req.body).forEach((each)=>logginedUser[each]=req.body[each])
-  await logginedUser.save()
-res.json(`{${logginedUser.firstName}} data is succesfully updated `)
+ 
+ const updatedUser=await User.findByIdAndUpdate({_id:logginedUser._id},req.body,{ new: true, runValidators: true })
+ console.log(updatedUser)
+//  const updatedUSer=await User.findById({_id:logginedUser._id})
+  // Object.keys(req.body).forEach((each)=>logginedUser[each]=req.body[each])
+  // await logginedUser.save()
+
+res.json({message:`${logginedUser.firstName} data is succesfully updated `,
+          data:updatedUser})
   }catch(err){
     res.status(400).send(err.message)
   }

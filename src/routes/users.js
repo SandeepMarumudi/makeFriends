@@ -10,7 +10,7 @@ userRouter.get("/user/requests/received", userAuth, async (req, res) => {
     const connectionsReceived = await ConnectionRequest.find({
       toUserId: loggedUser._id,
       status: "interested",
-    }).populate("fromUserId", "firstName lastName");
+    }).populate("fromUserId", "firstName lastName age gender photoUrl");
     res.json({
       message: "data fetch successfully:",
       data: connectionsReceived,
@@ -27,7 +27,7 @@ userRouter.get("/user/connections", userAuth, async (req, res) => {
       $or: [
         { fromUserId: loggedUser._id, status: "accepted" },
         { toUserId: loggedUser._id, status: "accepted" },
-      ],
+      ]
     })
       .populate("fromUserId", "firstName lastName gender age skills")
       .populate("toUserId", "firstName lastName gender age skills");
@@ -51,7 +51,7 @@ userRouter.get("/feed", userAuth, async (req, res) => {
 
     const requestsReceivedOrSent = await ConnectionRequest.find({
       $or: [{ fromUserId: loggedUser._id }, { toUserId: loggedUser._id }],
-    }).select("fromUserId toUserId");
+    }).select("fromUserId toUserId age");
 
     const hideUsersFromFeed = new Set();
     requestsReceivedOrSent.map((req) => {
@@ -64,7 +64,7 @@ userRouter.get("/feed", userAuth, async (req, res) => {
         { _id: { $nin: Array.from(hideUsersFromFeed) } },
         { _id: { $ne: loggedUser._id } },
       ],
-    }).select("firstName lastName")
+    }).select("firstName lastName age photoUrl about")
     .skip(skip)
     .limit(limit)
 

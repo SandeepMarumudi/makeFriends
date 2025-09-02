@@ -13,9 +13,12 @@ const userRouter = require("./src/routes/users");
 const app = express();
 app.use(cookie())
 app.use(express.json());
-app.use(cors()) //cors error while fectching api's from the frontEnd
+app.use(cors({
+  origin:"http://localhost:5173",
+  credentials:true
+})) //cors error while fectching api's from the frontEnd
 
-
+ 
 app.use("/",authRouter)
 app.use("/",profileRouter)
 app.use("/",requestRouter)

@@ -12,7 +12,7 @@ const authRouter=express.Router()
 
 authRouter.post("/signup", async (req, res) => {
   try {
-    const { firstName, lastName, email, phone, age, password, gender,skills } =
+    const { firstName, lastName, email, phone, age, password, gender,skills,photoUrl,about } =
       req.body;
 
     //check the user for valide information
@@ -32,13 +32,17 @@ authRouter.post("/signup", async (req, res) => {
       password: beCryptPassword,
       gender,
       age,
-      skills
+      skills,
+      photoUrl,
+      about
     });
 
-    await user.save();
+   const savedUser= await user.save();
+  const token= await savedUser.getJWT()
+    res.cookie("token",token)
    
 
-    res.send("data successfully inserted to the database");
+    res.json({message:"User added successfull"});
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -48,7 +52,6 @@ authRouter.post("/login",async(req,res)=>{
   const {email,password}=req.body
   try{
     const user= await User.findOne({email:email})
-    console.log(user)
     if(!user){
       throw new Error("Email id not found please SignUp")
     }
@@ -58,7 +61,7 @@ authRouter.post("/login",async(req,res)=>{
       const token= await user.getJWT()
       console.log("token is:",token)
       res.cookie("token",token)
-      res.send("user successfully loggedin")
+      res.send(user)
     }else{
       throw new Error("Password wrong please re enter")
     }
@@ -73,4 +76,4 @@ authRouter.post("/logout",async(req,res)=>{
   res.send("successfully logged out")
 })
 
-module.exports=authRouter
+module.exports=authRouter 

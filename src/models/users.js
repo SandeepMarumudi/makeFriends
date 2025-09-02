@@ -23,7 +23,6 @@ const userSchema = new mongoose.Schema(
     },
     gender: {
       type: String,
-    
     },
     password: {
       type: String,
@@ -32,16 +31,21 @@ const userSchema = new mongoose.Schema(
     },
     age: {
       type: Number,
-     
-      
+      required: false, 
+      unique: false,
     },
     phone: {
       type: Number,
-     
-      
     },
     skills: {
       type: [String],
+    },
+    photoUrl: {
+      type: String,
+      unique: true,
+    },
+    about: {
+      type: String,
     },
     resetToken: {
       type: String,
