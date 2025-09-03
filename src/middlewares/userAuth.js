@@ -3,10 +3,10 @@ const User = require('../models/users')
 
 const adminAuth=(req,res,next)=>{
     const token='abc'
-    const adminAuthorizsed= token==="abc"
-    if(!adminAuthorizsed){
+    const adminAuthorized= token==="abc"
+    if(!adminAuthorized){
     
-        res.status(401).send("unathorised admin login")
+        res.status(401).send("unauthorized admin login")
     }else{
       
         next()
