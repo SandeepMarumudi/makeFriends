@@ -42,7 +42,7 @@ authRouter.post("/signup", async (req, res) => {
     res.cookie("token",token)
    
 
-    res.json({message:"User added successfull"});
+    res.json({message:"User added successfull",data:savedUser});
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -65,6 +65,7 @@ authRouter.post("/login",async(req,res)=>{
     }else{
       throw new Error("Password wrong please re enter")
     }
+    
 
   }catch(err){
     res.status(400).json({ message: err.message })

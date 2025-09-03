@@ -26,7 +26,6 @@ const userAuth=async(req,res,next)=>{
             throw new Error("user not found please login")
         }
         req.user=user
-        console.log("fromUserAuth:",user)
         next()
 
     }catch(err){

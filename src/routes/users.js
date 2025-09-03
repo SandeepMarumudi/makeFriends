@@ -29,8 +29,8 @@ userRouter.get("/user/connections", userAuth, async (req, res) => {
         { toUserId: loggedUser._id, status: "accepted" },
       ]
     })
-      .populate("fromUserId", "firstName lastName gender age skills")
-      .populate("toUserId", "firstName lastName gender age skills");
+      .populate("fromUserId", "firstName lastName gender age skills photoUrl")
+      .populate("toUserId", "firstName lastName gender age skills photoUrl");
 
     if (!connectionRequests) {
       throw new Error("no data found");
