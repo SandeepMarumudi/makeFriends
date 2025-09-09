@@ -15,6 +15,7 @@ app.use(cookie())
 app.use(express.json());
 app.use(cors({
   origin: "https://make-friends-frontend-two.vercel.app",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials:true
 })) //cors error while fetching api's from the frontEnd
 
