@@ -14,7 +14,7 @@ const app = express();
 app.use(cookie())
 app.use(express.json());
 app.use(cors({
-  origin:"http://localhost:5173",
+  origin:"https://make-friends-chi.vercel.app/",
   credentials:true
 })) //cors error while fetching api's from the frontEnd
 
