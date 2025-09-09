@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(cors({
   origin:"http://localhost:5173",
   credentials:true
-})) //cors error while fectching api's from the frontEnd
+})) //cors error while fetching api's from the frontEnd
 
  
 app.use("/",authRouter)

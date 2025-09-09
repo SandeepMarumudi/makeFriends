@@ -59,13 +59,12 @@ authRouter.post("/login",async(req,res)=>{
     const checkPassword= await user.validatePassword(password)
     if(checkPassword){
       const token= await user.getJWT()
-      console.log("token is:",token)
       res.cookie("token",token)
       res.send(user)
     }else{
       throw new Error("Password wrong please re enter")
     }
-    
+
 
   }catch(err){
     res.status(400).json({ message: err.message })

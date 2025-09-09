@@ -78,12 +78,12 @@ userSchema.methods.validatePassword = async function (userInputPassword) {
       userInputPassword,
       hashPassword
     );
-    console.log(ispassword);
     return ispassword;
   } catch (err) {
     res.status(400).send(err.message);
   }
 };
+
 
 const User = mongoose.model("User", userSchema); // creating a model with userScema
 module.exports = User; // export the mode
